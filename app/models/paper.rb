@@ -1,5 +1,10 @@
 class Paper < ApplicationRecord
   belongs_to :user
-  belongs_to :chat
-  belongs_to :citation
+  has_one :chat
+  has_one :analysis
+  has_many :citations
+
+  validates :title, presence: true
+  validates :author, presence: true
+  validates :published_year, presence: true
 end

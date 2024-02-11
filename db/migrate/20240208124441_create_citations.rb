@@ -7,6 +7,7 @@ class CreateCitations < ActiveRecord::Migration[7.1]
       t.string :doi
       t.integer :citations_count
       t.references :paper, null: false, foreign_key: true
+      t.references :graph, null: false, foreign_key: true
 
       t.timestamps
     end

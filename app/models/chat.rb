@@ -1,4 +1,4 @@
 class Chat < ApplicationRecord
   belongs_to :paper
-  belongs_to :message
+  has_many :messages
 end

@@ -1,4 +1,4 @@
 class Graph < ApplicationRecord
-  belongs_to :citation
   belongs_to :paper
+  has_many :citations
 end
