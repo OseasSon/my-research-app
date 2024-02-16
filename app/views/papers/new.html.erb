@@ -1,0 +1,4 @@
+<%= form_with(model: @paper) do |form| %>
+  <%= form.text_area :title, placeholder: 'Your secret here' %>
+  <%= form.submit 'Create Paper' %>
+<% end %>

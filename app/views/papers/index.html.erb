@@ -1,0 +1,10 @@
+<h1>Papers</h1>
+
+<% @papers.each do |paper| %>
+  <div>
+    <p><%= paper.title %></p>
+    <% if user_signed_in? %>
+      <p>Author: <%= paper.user.email %></p>
+    <% end %>
+  </div>
+<% end %>

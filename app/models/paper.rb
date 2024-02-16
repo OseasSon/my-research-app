@@ -5,6 +5,6 @@ class Paper < ApplicationRecord
   has_many :citations
 
   validates :title, presence: true
-  validates :author, presence: true
-  validates :published_year, presence: true
+  #validates :author, presence: true
+  #validates :published_year, presence: true
 end
