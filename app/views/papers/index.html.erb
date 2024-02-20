@@ -1,5 +1,11 @@
 <h1>Papers</h1>
 
+<%= form_with(model: @paper, url: papers_path) do |form| %>
+  <%= form.text_area :title, placeholder: 'Name your upload' %><br>
+  <%= form.file_field :pdf %><br><br>
+  <%= form.submit 'Create Paper' %><br><br>
+<% end %>
+
 <% @papers.each do |paper| %>
   <div>
     <p><%= paper.title %></p>
@@ -8,3 +14,5 @@
     <% end %>
   </div>
 <% end %>
+
+<%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
