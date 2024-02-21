@@ -1,6 +1,6 @@
 <h1>Papers</h1>
 
-<%= form_with(model: @paper, url: papers_path) do |form| %>
+<%= form_with(model: @paper, url: papers_path, local: true) do |form| %>
   <%= form.text_area :title, placeholder: 'Name your upload' %><br>
   <%= form.file_field :pdf %><br><br>
   <%= form.submit 'Create Paper' %><br><br>
@@ -8,10 +8,12 @@
 
 <% @papers.each do |paper| %>
   <div>
-    <p><%= paper.title %></p>
-    <% if user_signed_in? %>
-      <p>Author: <%= paper.user.email %></p>
-    <% end %>
+    <p>Title: <%= paper.title %></p>
+    <p>Author: <%= paper.author %></p>
+    <p><%= link_to "Destroy", paper_path(paper), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"} %>
+    </p>
   </div>
 <% end %>
 
