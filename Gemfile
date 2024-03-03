@@ -69,3 +69,7 @@ end
 gem "devise", "~> 4.9"
 
 gem 'pdf-reader', '~> 2.12'
+
+gem 'cssbundling-rails'
+
+gem 'jsbundling-rails'

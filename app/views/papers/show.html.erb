@@ -1,0 +1,17 @@
+<nav class="p-4 fixed top-0 left-0 w-full flex justify-end items-center">
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "mr-4" %>
+</nav>
+
+<h1><%= @paper.title %></h1>
+
+<div class="flex">
+  <!-- Display the PDF preview -->
+  <div class="w-3/4">
+    <embed src="<%= url_for(@paper.pdf) %>" width="100%" height="850" type='application/pdf'>
+  </div>
+
+  <!-- Display the chat interface -->
+  <div id="chat" class="w-1/2">
+    <!-- Chat interface goes here -->
+  </div>
+</div>

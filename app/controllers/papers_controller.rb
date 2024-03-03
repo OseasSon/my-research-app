@@ -30,7 +30,7 @@ class PapersController < ApplicationController
   end
 
   def index
-    @papers = Paper.all
+    @papers = current_user.papers
     @paper = Paper.new
   end
 
@@ -38,6 +38,10 @@ class PapersController < ApplicationController
     @paper = Paper.find(params[:id])
     @paper.destroy
     redirect_to papers_path, status: :see_other
+  end
+
+  def show
+    @paper = Paper.find(params[:id])
   end
 
   private

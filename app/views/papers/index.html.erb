@@ -1,20 +1,36 @@
-<h1>Papers</h1>
+<div class="container mx-auto px-4 py-8">
+    <nav class="p-4 fixed top-0 left-0 w-full flex justify-end items-center">
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "mr-4" %>
+    </nav>
 
-<%= form_with(model: @paper, url: papers_path, local: true) do |form| %>
-  <%= form.text_area :title, placeholder: 'Name your upload' %><br>
-  <%= form.file_field :pdf %><br><br>
-  <%= form.submit 'Create Paper' %><br><br>
-<% end %>
-
-<% @papers.each do |paper| %>
-  <div>
-    <p>Title: <%= paper.title %></p>
-    <p>Author: <%= paper.author %></p>
-    <p><%= link_to "Destroy", paper_path(paper), data: {
-      turbo_method: :delete,
-      turbo_confirm: "Are you sure?"} %>
-    </p>
+  <div class="flex flex-col items-start mb-8 mt-10">
+    <h1 class="text-4xl font-semibold">This is your homepage</h1>
+    <h2 class="text-1xl">You can upload new papers or view previous ones.</h2>
   </div>
-<% end %>
 
-<%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <div class="flex flex-col items-center mb-8">
+    <%= form_with(model: @paper, url: papers_path, local: true) do |form| %>
+      <div class="mb-4 flex justify-center">
+        <%= form.file_field :pdf, class: "cursor-pointer py-2 px-4 rounded-lg" %>
+      </div>
+      <div class="mb-6">
+        <%= form.submit 'Upload a Paper', class: "cursor-pointer border-2 border-black font-semibold py-2 px-4 rounded-lg w-full" %>
+      </div>
+    <% end %>
+
+    <div class="flex justify-center w-4/6">
+      <div class="grid grid-cols-1 gap-4">
+        <% @papers.each do |paper| %>
+          <div class="shadow overflow-hidden bg-sky-100 p-4 border-2 border-black rounded-lg">
+            <p class="text-base font-semibold mb-2">Title: <%= link_to paper.title, paper_path(paper) %></p>
+            <p class="text-base font-semibold mb-2">Author: <%= paper.author %></p>
+            <p class="text-red-500 hover:underline"><%= link_to "Delete", paper_path(paper), data: {
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?"} %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
