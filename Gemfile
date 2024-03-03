@@ -73,3 +73,5 @@ gem 'pdf-reader', '~> 2.12'
 gem 'cssbundling-rails'
 
 gem 'jsbundling-rails'
+
+gem "ruby-openai", "~> 6.3"
