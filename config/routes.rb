@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'messages/index'
+  get 'messages/show'
+  get 'messages/create'
   devise_for :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
