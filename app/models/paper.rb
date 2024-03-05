@@ -1,8 +1,8 @@
 class Paper < ApplicationRecord
   belongs_to :user
-  has_one :chat
-  has_one :analysis
-  has_many :citations
+  has_one :chat, dependent: :destroy
+  has_one :analysis, dependent: :destroy
+  has_many :citations, dependent: :destroy
   has_one_attached :pdf, dependent: :destroy
 
   validates :pdf, presence: true
@@ -14,6 +14,8 @@ class Paper < ApplicationRecord
   private
 
   def pdf_file_validation
+    errors.add(:pdf, "can't be blank") unless pdf.attached?
+
     if pdf.attached?
       unless pdf.content_type.in?(%w(application/pdf))
         errors.add(:pdf, 'File must be a PDF')

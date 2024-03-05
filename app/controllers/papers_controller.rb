@@ -5,9 +5,12 @@ class PapersController < ApplicationController
   rescue_from PDF::Reader::MalformedPDFError, with: :handle_invalid_pdf
 
   def create
-    uploaded_io = params[:paper][:pdf]
+    if params[:paper].nil? || params[:paper][:pdf].blank?
+      flash.now[:error] = "No file selected"
+      handle_form_error
 
-    if uploaded_io.content_type == 'application/pdf'
+    elsif params[:paper][:pdf].content_type == 'application/pdf'
+      uploaded_io = params[:paper][:pdf]
       reader = PDF::Reader.new(uploaded_io.tempfile.path)
 
       title = reader.info[:Title]
@@ -42,6 +45,9 @@ class PapersController < ApplicationController
 
   def show
     @paper = Paper.find(params[:id])
+    @chat = @paper.chat || @paper.create_chat
+    @messages = @chat.messages.order(created_at: :asc)
+    @message = Message.new
   end
 
   private
@@ -51,7 +57,7 @@ class PapersController < ApplicationController
   end
 
   def handle_form_error
-    @papers = Paper.all
+    @papers = current_user.papers
     render :index, status: :unprocessable_entity
   end
 

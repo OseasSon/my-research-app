@@ -2,16 +2,24 @@
   <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "mr-4" %>
 </nav>
 
-<h1><%= @paper.title %></h1>
-
-<div class="flex">
+<div class="flex flex-row h-screen pt-14">
   <!-- Display the PDF preview -->
-  <div class="w-3/4">
-    <embed src="<%= url_for(@paper.pdf) %>" width="100%" height="850" type='application/pdf'>
+  <div class="w-1/2 h-full overflow-auto">
+    <embed src="<%= url_for(@paper.pdf) %>" width="100%" height="100%" type='application/pdf'>
   </div>
 
   <!-- Display the chat interface -->
-  <div id="chat" class="w-1/2">
-    <!-- Chat interface goes here -->
-  </div>
+  <turbo-frame id="chat" class="w-1/2 h-full overflow-auto bg-sky-100">
+    <div id="chat" class="p-4">
+      <!-- Chat messages go here -->
+    </div>
+
+    <!-- Fixed position form -->
+    <%= form_with(model: [ @chat, @message ], class: "fixed bottom-0 left-1/2 w-1/2 bg-white p-4 shadow-md") do |form| %>
+      <div class="flex items-center w-full mx-auto">
+        <%= form.text_field :message, placeholder: 'Ask a question', class: "flex-grow mr-2 p-2 border rounded" %>
+        <%= form.submit "Send", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+      </div>
+    <% end %>
+  </turbo-frame>
 </div>
