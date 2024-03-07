@@ -1,4 +1,5 @@
 require 'pdf-reader'
+require 'securerandom'
 
 class PapersController < ApplicationController
   before_action :authenticate_user!
@@ -44,6 +45,7 @@ class PapersController < ApplicationController
   end
 
   def show
+    @uuid = SecureRandom.uuid
     @paper = Paper.find(params[:id])
     @chat = @paper.chat || @paper.create_chat
     @messages = @chat.messages.order(created_at: :asc)
