@@ -3,4 +3,5 @@ class Message < ApplicationRecord
 
   validates :body, presence: true
   validates :sender, presence: true
+  validates :uuid, presence: true
 end

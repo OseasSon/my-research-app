@@ -10,12 +10,14 @@
 
   <!-- Display the chat interface -->
   <turbo-frame id="chat" class="w-1/2 h-full overflow-auto bg-sky-100">
-    <div id="chat" class="p-4">
+    <%= turbo_stream_from "stream_#{@uuid}" %>
+    <div id="messages" class="p-4">
       <!-- Chat messages go here -->
     </div>
 
-    <!-- Fixed position form -->
+  <!-- Fixed position form -->
     <%= form_with(model: [ @chat, @message ], class: "fixed bottom-0 left-1/2 w-1/2 bg-white p-4 shadow-md") do |form| %>
+      <%= form.hidden_field :uuid, value: @uuid %>
       <div class="flex items-center w-full mx-auto">
         <%= form.text_field :body, placeholder: 'Ask a question', class: "flex-grow mr-2 p-2 border rounded" %>
         <%= form.submit "Send", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
