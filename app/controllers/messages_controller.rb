@@ -3,10 +3,10 @@ class MessagesController < ApplicationController
 
   def create
     @chat = Chat.find(params[:chat_id])
-    @message = @chat.messages.build(message_params.merge(sender: 'user'))
+    @message = @chat.messages.build(message_params.merge(sender: 'You'))
 
     if @message.save
-      RequestJob.perform_later(message_params, @api_key)
+      RequestJob.perform_later(message_params, @chat, @api_key)
       redirect_to @chat.paper
     else
       # Handle the error here.
@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:body, :sender, :uuid)
+    params.require(:message).permit(:body, :sender)
   end
 
   def get_api_key

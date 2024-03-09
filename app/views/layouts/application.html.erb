@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
@@ -14,9 +13,19 @@
 
   <body class="font-sans">
     <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <div id="flash-message" class="fixed top-0 left-1/2 mt-4 transform -translate-x-1/2 py-2 px-4 rounded-lg shadow-md z-50
+      <%= message_type == 'notice' ? 'bg-green-500' : 'bg-red-500' %>">
+        <%= message %>
+      </div>
     <% end %>
 
     <%= yield %>
   </body>
+
+  <script>
+    setTimeout(function() {
+      const flashMessage = document.getElementById('flash-message');
+      if (flashMessage) flashMessage.style.display = 'none';
+    }, 3000);
+  </script>
 </html>
