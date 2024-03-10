@@ -6,7 +6,7 @@ class PapersController < ApplicationController
 
   def create
     if params[:paper].nil? || params[:paper][:pdf].blank?
-      flash.now[:error] = "No file selected"
+      flash[:error] = "No file selected"
       handle_form_error
 
     elsif params[:paper][:pdf].content_type == 'application/pdf'
@@ -19,15 +19,15 @@ class PapersController < ApplicationController
       @paper = current_user.papers.build(paper_params.merge(title: title, author: author))
 
       if @paper.save
-        flash[:success] = "Paper successfully created!"
+        flash[:notice] = "Paper successfully created!"
         redirect_to papers_path
       else
-        #flash.now[:error] = "Error creating paper: #{@paper.errors.full_messages.join(', ')}"
+        flash[:error] = "Error creating paper: #{@paper.errors.full_messages.join(', ')}"
         handle_form_error
       end
 
     else
-      flash.now[:error] = "File must be a PDF"
+      flash[:error] = "File must be a PDF"
       handle_form_error
     end
   end
@@ -58,11 +58,11 @@ class PapersController < ApplicationController
 
   def handle_form_error
     @papers = current_user.papers
-    render :index, status: :unprocessable_entity
+    redirect_to papers_path
   end
 
   def handle_invalid_pdf
-    flash.now[:alert] = 'Uploaded file is not a valid PDF'
+    flash[:alert] = 'Uploaded file is not a valid PDF'
     handle_form_error
   end
 end

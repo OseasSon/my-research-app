@@ -300,6 +300,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise (~> 4.9)
+  faraday
   importmap-rails
   jbuilder
   jsbundling-rails

@@ -14,6 +14,7 @@ class Paper < ApplicationRecord
   private
 
   def pdf_file_validation
+    Rails.logger.info "Starting model validation... 🟢"
     errors.add(:pdf, "can't be blank") unless pdf.attached?
 
     if pdf.attached?

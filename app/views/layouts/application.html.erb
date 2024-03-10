@@ -6,8 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", 'data-turbolinks-track': 'reload' %>
-    <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
@@ -23,9 +21,12 @@
   </body>
 
   <script>
-    setTimeout(function() {
+    // Hide flash messages after 5 seconds on form submissions
+    setTimeout(() => {
       const flashMessage = document.getElementById('flash-message');
-      if (flashMessage) flashMessage.style.display = 'none';
-    }, 3000);
+      if (flashMessage) {
+        flashMessage.remove();
+      }
+    }, 5000);
   </script>
 </html>
