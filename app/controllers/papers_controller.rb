@@ -11,7 +11,8 @@ class PapersController < ApplicationController
 
     elsif params[:paper][:pdf].content_type == 'application/pdf'
       uploaded_io = params[:paper][:pdf]
-      reader = PDF::Reader.new(uploaded_io.tempfile.path)
+      file_path = uploaded_io.tempfile.path
+      reader = PDF::Reader.new(file_path)
 
       title = reader.info[:Title]
       author = reader.info[:Author]
@@ -20,6 +21,7 @@ class PapersController < ApplicationController
 
       if @paper.save
         flash[:notice] = "Paper successfully created!"
+        # CreateAssistantJob.perform_later(@paper)
         redirect_to papers_path
       else
         flash[:error] = "Error creating paper: #{@paper.errors.full_messages.join(', ')}"

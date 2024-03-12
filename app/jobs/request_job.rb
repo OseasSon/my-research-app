@@ -6,10 +6,10 @@ class RequestJob < ApplicationJob
 
     response = connection.post do |req|
       req.url "/v1/chat/completions"
-      req.headers['Content-Type'] = 'application/json'
+      req.headers['Content-Type'] = "application/json"
       req.headers['Authorization'] = "Bearer #{api_key}"
       req.body = {
-        model: 'gpt-3.5-turbo',
+        model: "gpt-3.5-turbo",
         messages: [
           {
             "role": "system",

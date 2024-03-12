@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_08_211959) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_12_231527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_211959) do
     t.bigint "paper_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "thread_id"
     t.index ["paper_id"], name: "index_chats_on_paper_id"
   end
 
@@ -99,6 +100,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_211959) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "assistant_id"
     t.index ["user_id"], name: "index_papers_on_user_id"
   end
 
