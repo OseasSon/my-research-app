@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
     @message = @chat.messages.build(message_params.merge(sender: 'You'))
 
     if @message.save
-      RequestJob.perform_later(message_params, @chat, @api_key)
+      # RequestJob.perform_later(message_params, @chat, @api_key)
+      CreateMessageJob.perform_later(@message)
       redirect_to @chat.paper
     else
       # Handle the error here.

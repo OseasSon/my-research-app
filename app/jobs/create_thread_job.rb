@@ -1,10 +1,10 @@
 class CreateThreadJob < ApplicationJob
   queue_as :default
 
-  def perform(paper)
+  def perform(chat)
     response = client.threads.create
     thread_id = response["id"]
-    paper.chat.update!(thread_id: thread_id)
+    chat.update!(thread_id: thread_id)
   end
 
   def client

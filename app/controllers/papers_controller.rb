@@ -21,7 +21,6 @@ class PapersController < ApplicationController
 
       if @paper.save
         flash[:notice] = "Paper successfully created!"
-        # CreateAssistantJob.perform_later(@paper)
         redirect_to papers_path
       else
         flash[:error] = "Error creating paper: #{@paper.errors.full_messages.join(', ')}"

@@ -11,7 +11,13 @@ class Paper < ApplicationRecord
   #validates :author, presence: true
   #validates :published_year, presence: true
 
+  after_create :create_assistant_in_openai
+
   private
+
+  def create_assistant_in_openai
+    CreateAssistantJob.perform_later(self)
+  end
 
   def pdf_file_validation
     Rails.logger.info "Starting model validation... 🟢"
