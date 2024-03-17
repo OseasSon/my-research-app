@@ -73,8 +73,6 @@ class CreateMessageJob < ApplicationJob
       end
     end
 
-    puts "🔵 new_message_ids: #{new_message_ids}"
-
     bot_message_id = new_message_ids.last
     last_message = client.messages.retrieve(id: bot_message_id, thread_id: thread_id)
 

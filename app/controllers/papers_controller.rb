@@ -14,6 +14,8 @@ class PapersController < ApplicationController
       file_path = uploaded_io.tempfile.path
       reader = PDF::Reader.new(file_path)
 
+      puts "🔵 Reader info dump: #{reader.info}"
+
       title = reader.info[:Title]
       author = reader.info[:Author]
 

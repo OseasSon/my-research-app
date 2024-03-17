@@ -1,40 +1,42 @@
-<nav class="bg-white border-gray-200">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
+<nav class="bg-white">
+  <div class="flex flex-wrap items-center justify-between mx-auto">
     <%= link_to root_path, class: "flex items-center space-x-1" do %>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
       </svg>
-      <span class="self-center text-base font-semibold whitespace-nowrap">MyResearch</span>
+      <span class="self-center text-xl font-semibold whitespace-nowrap">MyResearch</span>
     <% end %>
-    <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-        <span class="sr-only">Open main menu</span>
+    <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
         <li>
-          <%= link_to "Home", root_path, class: "block py-2 px-3 bg-sky-400 rounded md:bg-transparent md:hover:text-sky-600 md:p-0" %>
+          <%= link_to "Home", root_path, class: "block text-lg py-2 px-3 rounded md:hover:text-sky-600 hover:bg-gray-100 md:hover:bg-transparent md:p-0" %>
         </li>
         <li>
-          <a href="#" class="block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0">About</a>
+          <%= link_to "Source", "https://github.com/OseasSon/my-research-app", target: "_blank", class: "block text-lg py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0" %>
         </li>
         <li>
-            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0 md:w-auto">Account <svg class="w-2.5 h-2.5 ms-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-            </svg></button>
-            <!-- Dropdown menu -->
-            <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-                <ul class="py-2 text-sm text-gray-700">
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-                  </li>
-                </ul>
-                <div class="py-1">
-                  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full" %>
-                </div>
-            </div>
+          <%= button_tag id: "dropdownNavbarLink", data: { dropdown_toggle: "dropdownNavbar" }, class: "flex text-lg items-center justify-between w-full py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-sky-600 md:p-0 md:w-auto" do %>
+            Account
+            <%= tag.svg class: "w-2.5 h-2.5 ms-2.5", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 10 6" do %>
+              <%= tag.path stroke: "currentColor", stroke_linecap: "round", stroke_linejoin: "round", stroke_width: "2", d: "m1 1 4 4 4-4" %>
+            <% end %>
+          <% end %>
+          <!-- Dropdown menu -->
+          <div id="dropdownNavbar" class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44">
+              <ul class="py-2 text-sm">
+                <li>
+                  <%= link_to "Settings", edit_user_registration_path, class: "block px-4 py-2 hover:bg-gray-100" %>
+                </li>
+              </ul>
+              <div class="py-1">
+                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "block px-4 py-2 text-sm hover:bg-gray-100 w-full" %>
+              </div>
+          </div>
         </li>
       </ul>
     </div>
