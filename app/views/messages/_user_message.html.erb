@@ -1,0 +1,3 @@
+<div class="my-4 p-4 border-2 border-black rounded-lg min-w-full <%= message.sender == 'Assistant' ? 'bg-sky-100' : '' %>">
+  <p class="text-base"><strong><%= message.sender %>:</strong> <%= message.body %></p>
+</div>

@@ -1,29 +1,35 @@
-<nav class="p-4 fixed top-0 left-0 w-full flex justify-end items-center">
-  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "mr-4" %>
-</nav>
-
-<div class="flex flex-row h-screen pt-14">
+<div class="flex flex-row h-screen">
   <!-- Display the PDF preview -->
   <div class="w-1/2 h-full overflow-auto">
     <embed src="<%= url_for(@paper.pdf) %>" width="100%" height="100%" type='application/pdf'>
   </div>
 
-  <!-- Display the chat interface -->
-  <turbo-frame id="chat" class="w-1/2 h-full overflow-auto bg-sky-100">
-    <%= turbo_stream_from "stream_#{@chat.id}" %>
-    <div id="messages" class="p-4">
-      <p><strong>Assistant:</strong> Hello! How can I help?</p>
-      <% @chat.messages.order(:created_at).each do |message| %>
-        <p><strong><%= message.sender %>:</strong> <%= message.body %></p>
-      <% end %>
+  <!-- Display the navbar and chat interface -->
+  <div class="w-1/2 h-full flex flex-col" data-controller="reset-form">
+    <div class="container mx-auto px-8 py-8">
+      <%= render 'layouts/navbar' %>
     </div>
 
-  <!-- Fixed position form -->
-    <%= form_with(model: [ @chat, @message ], class: "fixed bottom-0 left-1/2 w-1/2 bg-white p-4 shadow-md") do |form| %>
-      <div class="flex items-center w-full mx-auto">
-        <%= form.text_field :body, placeholder: 'Ask a question', class: "flex-grow mr-2 p-2 border rounded" %>
-        <%= form.submit "Send", class: "px-4 py-2 bg-blue-500 text-white rounded" %>
+    <turbo-frame id="chat" class="flex flex-col h-full overflow-auto">
+      <%= turbo_stream_from "stream_#{@chat.id}" %>
+      <div id="messages" class="px-4 flex-grow overflow-auto" data-reset-form-target="messages">
+        <%= render 'messages/init_prompt' %>
+        <% @chat.messages.order(:created_at).each do |message| %>
+          <%= render 'messages/user_message', message: message %>
+        <% end %>
       </div>
-    <% end %>
-  </turbo-frame>
+
+      <!-- Form -->
+      <%= form_with(model: [ @chat, @message ], data: { controller: "reset-form", action: "ajax:success->reset-form#reset turbo:submit-end->reset-form#reset ajax:success->reset-form#scrollToBottom turbo:submit-end->reset-form#scrollToBottom" }) do |form| %>
+        <div class="px-4 pb-4 pt-3 min-w-full relative">
+          <%= form.text_field :body, placeholder: 'Ask a question', class: "w-full p-4 pr-12 border-2 border-black rounded-lg", data: { "reset-form-target": "field" } %>
+          <%= form.button class: "absolute right-2 top-1/2 transform -translate-y-1/2 p-2 mx-4", type: "submit" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+              <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+            </svg>
+          <% end %>
+        </div>
+      <% end %>
+    </turbo-frame>
+  </div>
 </div>
