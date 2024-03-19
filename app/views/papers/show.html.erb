@@ -4,32 +4,12 @@
     <embed src="<%= url_for(@paper.pdf) %>" width="100%" height="100%" type='application/pdf'>
   </div>
 
-  <!-- Display the navbar and chat interface -->
-  <div class="w-1/2 h-full flex flex-col" data-controller="reset-form">
+  <!-- Display the navbar and main features -->
+  <div class="w-1/2 h-full flex flex-col" data-controller="reset-form switch_feature">
     <div class="container mx-auto px-8 py-8">
       <%= render 'layouts/navbar' %>
     </div>
 
-    <turbo-frame id="chat" class="flex flex-col h-full overflow-auto">
-      <%= turbo_stream_from "stream_#{@chat.id}" %>
-      <div id="messages" class="px-4 flex-grow overflow-auto" data-reset-form-target="messages">
-        <%= render 'messages/init_prompt' %>
-        <% @chat.messages.order(:created_at).each do |message| %>
-          <%= render 'messages/user_message', message: message %>
-        <% end %>
-      </div>
-
-      <!-- Form -->
-      <%= form_with(model: [ @chat, @message ], data: { controller: "reset-form", action: "ajax:success->reset-form#reset turbo:submit-end->reset-form#reset ajax:success->reset-form#scrollToBottom turbo:submit-end->reset-form#scrollToBottom" }) do |form| %>
-        <div class="px-4 pb-4 pt-3 min-w-full relative">
-          <%= form.text_field :body, placeholder: 'Ask a question', class: "w-full p-4 pr-12 border-2 border-black rounded-lg", data: { "reset-form-target": "field" } %>
-          <%= form.button class: "absolute right-2 top-1/2 transform -translate-y-1/2 p-2 mx-4", type: "submit" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-              <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
-            </svg>
-          <% end %>
-        </div>
-      <% end %>
-    </turbo-frame>
+    <%= render 'messages/chat_interface', chat: @chat, message: @message %>
   </div>
 </div>

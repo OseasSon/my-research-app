@@ -8,8 +8,7 @@ class Paper < ApplicationRecord
   validates :pdf, presence: true
   validate :pdf_file_validation
   validates :title, presence: true
-  #validates :author, presence: true
-  #validates :published_year, presence: true
+  validates :author, presence: true
 
   after_create :create_assistant_in_openai
 
