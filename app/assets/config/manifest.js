@@ -4,4 +4,3 @@
 //= link controllers/application.js
 //= link controllers/index.js
 //= link controllers/reset_form_controller.js
-//= link controllers/switch_feature_controller.js

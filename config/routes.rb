@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
+  get 'feature/:id', to: 'papers#feature', as: :feature
+
   # Defines the root path route ("/")
   root "papers#index"
 end

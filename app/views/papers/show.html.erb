@@ -5,11 +5,30 @@
   </div>
 
   <!-- Display the navbar and main features -->
-  <div class="w-1/2 h-full flex flex-col" data-controller="reset-form switch_feature">
-    <div class="container mx-auto px-8 py-8">
+  <div class="w-1/2 h-full flex flex-col" data-controller="reset-form">
+    <div class="container mx-auto px-8 pt-8 pb-5">
       <%= render 'layouts/navbar' %>
     </div>
 
-    <%= render 'messages/chat_interface', chat: @chat, message: @message %>
+    <!-- Buttons to switch features -->
+    <div class="flex flex-row justify-center space-x-2">
+      <%= link_to 'Summary', paper_path(@paper, feature: 'summary'), class: "my-2 p-2 border-2 border-black rounded-lg text-center w-24 hover:bg-teal-300", data: { turbo_action: 'replace', turbo_frame: 'feature' } %>
+      <%= link_to 'Chat', paper_path(@paper, feature: 'chat'), class: "my-2 p-2 border-2 border-black rounded-lg text-center w-24 hover:bg-teal-300", data: { turbo_action: 'replace', turbo_frame: 'feature' } %>
+      <%= link_to 'Graph', paper_path(@paper, feature: 'graph'), class: "my-2 p-2 border-2 border-black rounded-lg text-center w-24 hover:bg-teal-300", data: { turbo_action: 'replace', turbo_frame: 'feature' } %>
+    </div>
+
+    <%= turbo_frame_tag 'feature', class: "h-full overflow-auto" do %>
+      <% if @feature == 'chat' %>
+        <%= render 'messages/chat_interface', chat: @chat, message: @message %>
+      <% elsif @feature == 'summary' %>
+        <%= render 'messages/init_prompt', chat: @chat, message: @message %>
+      <% elsif @feature == 'graph' %>
+        <%= render 'messages/init_prompt', chat: @chat, message: @message %>
+      <% else %>
+        <%= render 'messages/chat_interface', chat: @chat, message: @message %>
+      <% end %>
+    <% end %>
+
+    <%# <%= render 'messages/chat_interface', chat: @chat, message: @message %>
   </div>
 </div>

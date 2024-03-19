@@ -51,6 +51,7 @@ class PapersController < ApplicationController
     @chat = @paper.chat || @paper.create_chat
     @messages = @chat.messages.order(created_at: :asc)
     @message = Message.new
+    @feature = params[:feature] || 'chat'
   end
 
   private
