@@ -14,7 +14,7 @@ class PapersController < ApplicationController
       file_path = uploaded_io.tempfile.path
       reader = PDF::Reader.new(file_path)
 
-      puts "🔵 Reader info dump: #{reader.info}"
+      puts "🟠 READER INFO: #{reader.info}"
 
       title = reader.info[:Title]
       author = reader.info[:Author]
@@ -48,10 +48,15 @@ class PapersController < ApplicationController
 
   def show
     @paper = Paper.find(params[:id])
+    @feature = params[:feature] || 'chat'
+
+    # For the Chat feature
     @chat = @paper.chat || @paper.create_chat
     @messages = @chat.messages.order(created_at: :asc)
     @message = Message.new
-    @feature = params[:feature] || 'chat'
+
+    # For the Analysis feature
+    @analysis = @paper.analysis
   end
 
   private

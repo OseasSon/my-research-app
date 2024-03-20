@@ -12,7 +12,10 @@ class MessagesController < ApplicationController
         end
         format.html { redirect_to @chat.paper }
       else
-        # handle error
+        format.html do
+          flash[:alert] = 'There was an error sending your message.'
+          redirect_to paper_path(@chat.paper)
+        end
       end
     end
   end

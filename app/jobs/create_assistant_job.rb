@@ -16,6 +16,7 @@ class CreateAssistantJob < ApplicationJob
     assistant_id = response["id"]
 
     paper.update!(assistant_id:  assistant_id)
+    puts "✅ Assistant created!"
   end
 
   def upload_file(blob)

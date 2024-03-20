@@ -1,5 +1,12 @@
 class Analysis < ApplicationRecord
-  belongs_to :paper
+  belongs_to :paper, dependent: :destroy
 
-  validates :summary_1, :summary_2, :summary_3, :summary_4, presence: true
+  after_create :create_thread_and_analysis_job
+
+  private
+
+  def create_thread_and_analysis_job
+    # The analysis job is called from within the thread job
+    CreateThreadJob.perform_later(nil, self)
+  end
 end

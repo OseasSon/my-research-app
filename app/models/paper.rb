@@ -10,16 +10,19 @@ class Paper < ApplicationRecord
   validates :title, presence: true
   validates :author, presence: true
 
-  after_create :create_assistant_in_openai
+  after_commit :create_openai_assistant_and_analysis, on: :create
 
   private
 
-  def create_assistant_in_openai
-    CreateAssistantJob.perform_later(self)
+  def create_openai_assistant_and_analysis
+    CreateAssistantJob.perform_now(self)
+
+    #After an assitant is created it also creates an analysis object
+    create_analysis
   end
 
   def pdf_file_validation
-    Rails.logger.info "Starting model validation... 🟢"
+    Rails.logger.info "🟢 Starting model validation..."
     errors.add(:pdf, "can't be blank") unless pdf.attached?
 
     if pdf.attached?
@@ -31,6 +34,10 @@ class Paper < ApplicationRecord
         errors.add(:pdf, 'File size must be less than 5MB')
       end
     end
+  end
+
+  def create_analysis
+    Analysis.create(paper: self)
   end
 
 end

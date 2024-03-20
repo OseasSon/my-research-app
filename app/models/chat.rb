@@ -7,6 +7,6 @@ class Chat < ApplicationRecord
   private
 
   def create_thread
-    CreateThreadJob.perform_later(self)
+    CreateThreadJob.perform_later(self, nil)
   end
 end
