@@ -11,6 +11,7 @@ class Paper < ApplicationRecord
   validates :author, presence: true
 
   after_commit :create_openai_assistant_and_analysis, on: :create
+  after_destroy :delete_assistant
 
   private
 
@@ -38,6 +39,10 @@ class Paper < ApplicationRecord
 
   def create_analysis
     Analysis.create(paper: self)
+  end
+
+  def delete_assistant
+    DeleteAssistantJob.perform_later(self.assistant_id, self.file_id)
   end
 
 end
