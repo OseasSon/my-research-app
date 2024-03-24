@@ -1,10 +1,7 @@
 // Import and register all your controllers from the importmap under controllers/*
-
 import { application } from "./application"
-
 import ResetFormController from "./reset_form_controller"
-application.register("reset-form", ResetFormController)
+import LoadingController from "./loading_controller"
 
-// Lazy load controllers as they appear in the DOM (remember not to preload controllers in import map!)
-// import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
-// lazyLoadControllersFrom("controllers", application)
+application.register("reset-form", ResetFormController)
+application.register("loading", LoadingController)

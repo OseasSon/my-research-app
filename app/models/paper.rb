@@ -17,7 +17,6 @@ class Paper < ApplicationRecord
 
   def create_openai_assistant_and_analysis
     CreateAssistantJob.perform_now(self)
-
     #After an assitant is created it also creates an analysis object
     create_analysis
   end

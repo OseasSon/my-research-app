@@ -1,0 +1,10 @@
+<% @papers.each do |paper| %>
+  <div class="shadow overflow-hidden bg-sky-100 p-4 border-2 border-black rounded-lg min-w-full">
+    <p class="text-base mb-2"><strong>Title: </strong><%= link_to paper.title, paper_path(paper) %></p>
+    <p class="text-base mb-2"><strong>Author: </strong><%= paper.author %></p>
+    <p class="text-red-600 hover:underline"><%= link_to "Delete", paper_path(paper), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"} %>
+    </p>
+  </div>
+<% end %>

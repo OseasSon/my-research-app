@@ -8,12 +8,18 @@
   </div>
 
   <div class="flex flex-col items-center mb-8">
-    <%= form_with(model: @paper, url: papers_path, local: true) do |form| %>
+    <%= form_with(model: @paper, url: papers_path, local: true, data: { controller: "loading", action: "turbo:submit-start->loading#show" }) do |form| %>
       <div class="mb-4">
         <%= form.file_field :pdf, class: "cursor-pointer py-2 px-4" %>
       </div>
-      <div data-turbo="false" class="mb-6">
-        <%= form.submit 'Upload a Paper', class: "cursor-pointer border-2 border-black hover:bg-teal-300 font-semibold py-2 px-4 rounded-lg ml-28" %>
+      <div class="mb-6 flex items-center">
+        <%= form.submit 'Upload a Paper', class: "cursor-pointer border-2 border-black hover:bg-emerald-100 font-semibold py-2 px-4 rounded-lg ml-28", data: { loading_target: "submitButton" } %>
+        <div data-loading-target="spinner" style="display:none">
+          <svg class="animate-spin ml-3 h-5 w-5 text-emerald-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
       </div>
     <% end %>
 
@@ -27,16 +33,7 @@
             <p class="text-base font-semibold mb-2">Your uploaded papers will appear here.</p>
           </div>
         <% else %>
-          <% @papers.each do |paper| %>
-            <div class="shadow overflow-hidden bg-sky-100 p-4 border-2 border-black rounded-lg min-w-full">
-              <p class="text-base mb-2"><strong>Title: </strong><%= link_to paper.title, paper_path(paper) %></p>
-              <p class="text-base mb-2"><strong>Author: </strong><%= paper.author %></p>
-              <p class="text-red-600 hover:underline"><%= link_to "Delete", paper_path(paper), data: {
-                turbo_method: :delete,
-                turbo_confirm: "Are you sure?"} %>
-              </p>
-            </div>
-          <% end %>
+          <%= render 'papers/papers', papers: @papers %>
         <% end %>
       </div>
     </div>
